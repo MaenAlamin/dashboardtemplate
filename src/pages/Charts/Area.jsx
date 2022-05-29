@@ -1,0 +1,44 @@
+import React from 'react'
+import {
+  ChartComponent,
+  SeriesCollectionDirective,
+  SeriesDirective,
+  Inject,
+  DateTime,
+  Legend,
+  SplineAreaSeries,
+} from '@syncfusion/ej2-react-charts'
+import { Header } from '../../components'
+import {
+  areaCustomSeries,
+  areaPrimaryXAxis,
+  areaPrimaryYAxis,
+} from '../../data/dummy'
+import { useStateContext } from '../../contexts/ContextProvider'
+
+const Area = () => {
+  const { currentMode } = useStateContext()
+  return (
+    <div className='m-4 md:m-10 mt-24 p-10 bg-white dark:bg-secondary-dark-bg rounded-3xl'>
+      <Header category='Chart' title='Area Inflation rate percentage' />
+      <ChartComponent
+        id='area-chart'
+        height='420'
+        primaryXAxis={areaPrimaryXAxis}
+        primaryYAxis={areaPrimaryYAxis}
+        chartArea={{ border: { border: 0 } }}
+        tooltip={{ enable: true }}
+        background={currentMode === 'Dark' ? '#33373e' : '#fff'}
+      >
+        <Inject services={[SplineAreaSeries, DateTime, Legend]} />
+        <SeriesCollectionDirective>
+          {areaCustomSeries.map((item, i) => (
+            <SeriesDirective key={i} {...item} />
+          ))}
+        </SeriesCollectionDirective>
+      </ChartComponent>
+    </div>
+  )
+}
+
+export default Area
